@@ -71,7 +71,7 @@ if [ "$TERM" != "dumb" ]; then
 	alias ded='mcedit -d -C editnormal=lightgray,black'
 	alias ded2='diakonos'
 	alias aee='aee -j'
-	##requires configure ~/.gcalclirc
+	## requires ~/.gcalclirc
 	alias agenda='gcalcli --cals all calw 2|less -r'
 fi
 
