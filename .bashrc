@@ -36,11 +36,14 @@ if [ "$TERM" != "dumb" ]; then
 
 	export PS1="\n\e[32;44;1m \h\e[37m - [\u] \e[0m\e[30;47m  (\t)  \e[0m\n\w :# "
 	export LS_OPTIONS='--color=auto'
+
 	export HISTCONTROL=ignorespace
 	#export HISTCONTROL=ignoredups
 	export HISTTIMEFORMAT='%F %T '
 	export HISTSIZE=32767
 	export HISTFILESIZE=3276700
+	# append to the history file, don't overwrite it
+	shopt -s histappend
 
 	case $TERM in
 		xterm*|screen)
@@ -52,11 +55,13 @@ if [ "$TERM" != "dumb" ]; then
 			;;
 	esac
 
-	setterm -blength 0
-
 	if [ -x /usr/bin/dircolors ]; then
 		eval "`dircolors -b`"
 	fi
+	# disable terminal annoying beep
+	setterm -blength 0
+	# if necessary update LINES & COLUMNS after each command
+	shopt -s checkwinsize
 
 	alias ls='ls $LS_OPTIONS'
 	alias rm='rm -i'
