@@ -1,2 +1,4 @@
-Bash profile, usually stored as .bashrc in the home folder
+Bash profile, usually stored as .bashrc in the home folder.
+
+Tested on Debian, Ubuntu, Centos. Some aliases might require external software.
 
