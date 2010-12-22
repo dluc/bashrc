@@ -32,9 +32,18 @@ function pp() {
 	my_ps f | awk '!/awk/ && $0~var' var=${1:-".*"} ;
 }
 
+function parse_git_branch {
+	git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/[\1]/'
+}
+
 if [ "$TERM" != "dumb" ]; then
 
-	export PS1="\n\e[32;44;1m \h\e[37m - [\u] \e[0m\e[30;47m  (\t)  \e[0m\n\w :# "
+	# == prompt without git info ==
+	#export PS1="\n\e[32;44;1m \h\e[37m - [\u] \e[0m\e[30;47m  (\t)  \e[0m\n\w :# "
+	
+	# == prompt with git branch name ==
+	export PS1="\n\e[32;44;1m \h\e[37m - [\u] \e[\033[0;31m\$(parse_git_branch)\e[0m\e[30;47m  (\t)  \e[0m\n\w :# "
+	
 	export LS_OPTIONS='--color=auto'
 
 	export HISTCONTROL=ignorespace
@@ -42,7 +51,7 @@ if [ "$TERM" != "dumb" ]; then
 	export HISTTIMEFORMAT='%F %T '
 	export HISTSIZE=32767
 	export HISTFILESIZE=3276700
-	# append to the history file, don't overwrite it
+	# == append to the history file, don't overwrite it ==
 	shopt -s histappend
 
 	case $TERM in
@@ -58,9 +67,9 @@ if [ "$TERM" != "dumb" ]; then
 	if [ -x /usr/bin/dircolors ]; then
 		eval "`dircolors -b`"
 	fi
-	# disable terminal annoying beep
+	# == disable terminal annoying beep ==
 	setterm -blength 0
-	# if necessary update LINES & COLUMNS after each command
+	# == if necessary update LINES & COLUMNS after each command ==
 	shopt -s checkwinsize
 
 	alias ls='ls $LS_OPTIONS'
