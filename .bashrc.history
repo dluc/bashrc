@@ -1,0 +1,9 @@
+export HISTCONTROL=ignorespace
+#export HISTCONTROL=ignoredups
+
+export HISTTIMEFORMAT='%F %T '
+export HISTSIZE=32767
+export HISTFILESIZE=3276700
+
+# == append to the history file, don't overwrite it ==
+shopt -s histappend

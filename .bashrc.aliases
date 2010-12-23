@@ -1,0 +1,43 @@
+export LS_OPTIONS=''
+
+if [ -x /usr/bin/dircolors ]; then
+	eval "`dircolors -b`"
+	export LS_OPTIONS='--color=auto'
+fi
+
+
+alias ls='ls $LS_OPTIONS'
+
+# Exclude . and .. , case insensitive sort, with /*@=%| symbols
+alias l='ls -lAfF'
+
+# Paginated list
+alias ll='l|less'
+
+# Back one directory
+alias -- ..='cd ..'
+
+# Previous directory
+alias -- -='cd -'
+
+# Require confirmation
+alias rm='rm -i'
+
+# Overwrite confirmation, preserve attributes, recursive, do not follow symlinks
+alias cp='cp -ia'
+
+# Overwrite confirmation
+alias mv='mv -i'
+
+alias grep='grep --color=auto'
+alias df='df -h'
+
+#alias less='less -nS'
+alias screen='/usr/bin/screen -a -h 10000 -R'
+
+alias ded='mcedit -d -C editnormal=lightgray,black'
+alias ded2='diakonos'
+alias aee='aee -j'
+
+## requires ~/.gcalclirc
+alias agenda='gcalcli --cals all calw 2|less -r'
