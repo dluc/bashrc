@@ -36,6 +36,28 @@ function parse_git_branch {
 	git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/[\1]/'
 }
 
+function sshcopyid {
+	KEY="$HOME/.ssh/id_dsa.pub"
+
+	if [ ! -f $KEY ];then
+		echo "private key not found at $KEY"
+		echo '* please create it with "ssh-keygen -t dsa"'
+		echo "* to login to the remote host without a password, don't give the key you create with ssh-keygen a password"
+		return
+	fi
+
+	if [ -z $1 ];then
+		echo "Please specify user@host.tld as the first switch to this script"
+		return
+	fi
+
+	echo "Putting your public key on $1... "
+
+	cat $KEY | ssh -q $1 "mkdir ~/.ssh 2>/dev/null; chmod 700 ~/.ssh; cat - >> ~/.ssh/authorized_keys; chmod 644 ~/.ssh/authorized_keys"
+
+	echo "done!"
+}
+
 if [ "$TERM" != "dumb" ]; then
 
 	# == prompt without git info ==
