@@ -24,10 +24,25 @@ function pp() {
 	my_ps f | awk '!/awk/ && $0~var' var=${1:-".*"} ;
 }
 
+# branch name plus dirtiness
 function parse_git_branch {
-	git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/[\1]/'
+	if git update-index -q --refresh 2>/dev/null; git diff-index --quiet --cached HEAD --ignore-submodules -- 2>/dev/null && git diff-files --quiet --ignore-submodules 2>/dev/null
+		then dirty=""
+	else
+		dirty="*"
+	fi
+
+	_branch=$(git symbolic-ref HEAD 2>/dev/null)
+	_branch=${_branch#refs/heads/} # apparently faster than sed
+	branch="" # need this to clear it when we leave a repo
+	if [[ -n $_branch ]]; then
+		branch=" [${_branch}${dirty}]"
+	fi
+
+	echo $branch
 }
 
+# copy ssh public key to remote server
 function sshcopyid {
 	KEY="$HOME/.ssh/id_dsa.pub"
 

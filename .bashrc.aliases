@@ -1,12 +1,18 @@
 export LS_OPTIONS=''
 
-if [ -x /usr/bin/dircolors ]; then
-	eval "`dircolors -b`"
-	export LS_OPTIONS='--color=auto'
-fi
+case $( uname -s ) in
+	Linux )
+		if [ -x /usr/bin/dircolors ]; then
+			eval `dircolors -b` # sets and exports LS_COLORS for bash terminals
+			alias ls='ls --color=auto'
+		fi
+		;;
+	Darwin )
+		export LSCOLORS="ExfxcxdxbxEgEdabagacad"
+		alias ls='ls -G'
+		;;
+esac
 
-
-alias ls='ls $LS_OPTIONS'
 
 # Exclude . and .. , case insensitive sort, with /*@=%| symbols
 alias l='ls -lAfF'
