@@ -15,7 +15,8 @@ esac
 
 
 # Exclude . and .. , case insensitive sort, with /*@=%| symbols
-alias l='ls -lAfF'
+# alias l='ls -lAfF'
+alias l='ls -lAF'
 
 # Paginated list
 alias ll='l|less'
@@ -44,6 +45,7 @@ alias screen='/usr/bin/screen -a -h 10000 -R'
 alias ded='mcedit -d -C editnormal=lightgray,black'
 alias ded2='diakonos'
 alias aee='aee -j'
+alias nano='nano -cESm --tabsize=4'
 
 ## requires ~/.gcalclirc
 alias agenda='gcalcli --cals all calw 2|less -r'

@@ -64,3 +64,10 @@ function sshcopyid {
 
 	echo "done!"
 }
+
+#function setmyproxy {
+#        export http_proxy=http://127.0.0.1:80
+#        export https_proxy=http://127.0.0.1:80
+#        export ftp_proxy=http://127.0.0.1:80
+#}
+
